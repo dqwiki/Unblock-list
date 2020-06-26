@@ -164,5 +164,5 @@ table+=runCategory("Requests for unblock-auto‎","auto",table)
 table+=runCategory("Unblock on hold‎","hold",table)
     #r"([0-2]|)[0-9]:[0-5][0-9], ([0-3]|)[0-9] .* 20[0-9][0-9] \(UTC\)"
 table+="|}"
-page = masterwiki.pages["User:DeltaQuad/unblock table"]
+page = masterwiki.pages["User:AmandaNP/unblock table"]
 page.save(table, "Manually requested run - Unblock table")
