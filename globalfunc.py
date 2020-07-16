@@ -98,17 +98,18 @@ def findblock(user):
             info = raw["query"]["blocks"][0]
             return {'user':user,'blockadmin':info["by"],'blockdate':info["timestamp"],'blockreason':"<nowiki>"+info["reason"]+"</nowiki>",'blocklength':info["expiry"]}
         else:
+
             params = {'action': 'query',
             'format': 'json',
             'list': 'blocks',
             'bkids': user
             }
-            raw = callAPI(params)
+            try:raw = callAPI(params)
+            except:
+                return {'user':user,'blockadmin':"N/A",'blockdate':"N/A",'blockreason':"N/A",'blocklength':"N/A"}
             if len(raw["query"]["blocks"])>0:
                 info = raw["query"]["blocks"][0]
                 return {'user':user,'blockadmin':info["by"],'blockdate':info["timestamp"],'blockreason':"<nowiki>"+info["reason"]+"</nowiki>",'blocklength':info["expiry"]}
-            else:
-                return {'user':user,'blockadmin':"N/A",'blockdate':"N/A",'blockreason':"N/A",'blocklength':"N/A"}
 def findunblocktime(pagename,id):
     params = {'action': 'query',
         'format': 'json',
