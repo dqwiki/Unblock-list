@@ -126,6 +126,7 @@ def findunblocktime(pagename,id):
         found=False
         timebefore = time
         time = revision['timestamp']
+        print revision
         content = revision['slots']['main']['*']
         unblocktemplates = ["{{unblock|","{{unblock on hold|","{{unblock-auto|","{{unblock-bot|","{{unblock-spamun|","{{unblock-un|","{{unblock-un on hold|"]
         for item in unblocktemplates:
