@@ -69,7 +69,6 @@ def getLastEdit(title):
     last = history[0]
     timestamp = last["timestamp"]
     time = datetime.strptime(timestamp, '%Y-%m-%dT%H:%M:%SZ')
-    time = time.replace(" ".join(time.split(" ")[0:2]), "{{Date table sorting|"+" ".join(time.split(" ")[0:2])+"}}")
     return {'user':last["user"],'timestamp':time}
 
 def findblock(user):
@@ -142,7 +141,7 @@ def formatrow(block,appealtime,lastedit,type):
     if type=="auto":style='|- style="background-color:#ADD8E6"\n'
     if type=="username":style='|- style="background-color:#FFEFDB"\n'
     if type=="hold":style='|- style="background-color:#CC99CC"\n'
-    return style+"|[[User talk:"+block['user']+"|"+block['user']+"]]\n|"+appealtime+"\n|"+block['blockadmin']+"\n|"+block['blockdate']+"\n|"+block['blockreason']+"\n|"+block['blocklength']+"\n|"+lastedit['user']+"\n|"+lastedit['timestamp']+"\n"
+    return style+"|[[User talk:"+block['user']+"|"+block['user']+"]]\n|"+appealtime+"\n| Admin: "+block['blockadmin']+"\n Date: "+block['blockdate']+"\n Reason:"+block['blockreason']+"\n Length:"+block['blocklength']+"\n|"+lastedit['user']+"\n|"+lastedit['timestamp']+"\n"
 def runCategory(cat,type,table):
     alltable=""
     ulist = getMembers(cat)
@@ -158,7 +157,7 @@ def runCategory(cat,type,table):
     return alltable
 table = """
 {|class="wikitable sortable" width="100%"
-!User!!Request time!!Blocking admin!!Block date!!Block reason!!Block expiration!!Last user edit!!Timestamp
+!User!!Request time!!Block info!!Last user edit!!Timestamp
 """
 table+=runCategory("Requests for username changes when blocked‎","username",table)
 table+=runCategory("Requests for unblock","normal",table)
