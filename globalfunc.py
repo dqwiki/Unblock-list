@@ -147,7 +147,7 @@ def runCategory(cat,type,table):
     if len(ulist)==0:return ""
     blocklist=[]
     for page in ulist:
-        user = page['title'].split(":")[1]
+        user = page['title'].split("User talk:")[1:]
         if user in table:continue
         blockinfo = findblock(user)
         appealtime = findunblocktime(page['title'],page['pageid'])
