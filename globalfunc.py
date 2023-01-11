@@ -68,8 +68,7 @@ def getLastEdit(title):
     history=getHistory(title)
     last = history[0]
     timestamp = last["timestamp"]
-    time = datetime.strptime(timestamp, '%Y-%m-%dT%H:%M:%SZ')
-    return {'user':last["user"],'timestamp':time}
+    return {'user':last["user"],'timestamp':timestamp}
 
 def findblock(user):
     params = {'action': 'query',
