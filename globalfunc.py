@@ -174,9 +174,7 @@ result = sorted(table.items(), key=lambda appeals: appeals[0])
     #r"([0-2]|)[0-9]:[0-5][0-9], ([0-3]|)[0-9] .* 20[0-9][0-9] \(UTC\)"
 wikitable=""
 for item in result:
-    print(str(item))
-    quit()
-    wikitable+=item
+    wikitable+=item[1]
 wikitable = tableheader + wikitable + tablefooter
 page = masterwiki.pages["User:AmandaNP/unblock table"]
 page.save(wikitable, "Update unblock table")
