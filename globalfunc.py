@@ -164,6 +164,7 @@ tableheader = """
 {|class="wikitable sortable" width="100%"
 !Request time!!User!!Block info!!Last user edit!!Timestamp
 """
+tablefooter="|}"
 table = {}
 table=runCategory("Requests for username changes when blocked‎","username",table)
 table.update(runCategory("Requests for unblock","normal",table))
@@ -174,8 +175,6 @@ result = sorted(table.items(), key=lambda appeals: appeals[0])
 wikitable=""
 for item in table.values():
     wikitable+=item
-print result
-quit()
-tablefooter="|}"
+wikitable = tableheader + wikitable + tablefooter
 page = masterwiki.pages["User:AmandaNP/unblock table"]
-page.save(table, "Manually requested run - Unblock table")
+page.save(wikitable, "Update unblock table")
