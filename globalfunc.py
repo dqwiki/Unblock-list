@@ -171,6 +171,9 @@ table.update(runCategory("Requests for unblock-auto‎","auto",table))
 table.update(runCategory("Unblock on hold‎","hold",table))
 result = sorted(table.items(), key=lambda appeals: appeals[0])
     #r"([0-2]|)[0-9]:[0-5][0-9], ([0-3]|)[0-9] .* 20[0-9][0-9] \(UTC\)"
+wikitable=""
+for item in table.values():
+    wikitable+=item
 print result
 quit()
 tablefooter="|}"
