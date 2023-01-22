@@ -149,7 +149,8 @@ def runCategory(cat,type,table):
     specialappeallist = {}
     for page in ulist:
         user = page['title'].split("User talk:")[1]
-        for item in table.values():if user in item:continue
+        for item in table.values():
+            if user in item:continue
         blockinfo = findblock(user)
         appealtime = findunblocktime(page['title'],page['pageid'])
         lastedit = getLastEdit(page['title'])
