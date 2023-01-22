@@ -141,7 +141,7 @@ def formatrow(block,appealtime,lastedit,type):
     if type=="username":style='|- style="background-color:#FFEFDB"\n'
     if type=="hold":style='|- style="background-color:#CC99CC"\n'
     return style+"|"+appealtime+"\n|[[User talk:"+block['user']+"|"+block['user']+"]]\n"+"|Admin: "+block['blockadmin']+"<br>Date: "+block['blockdate']+"<br>Reason: "+block['blockreason']+"<br>Length: "+block['blocklength']+"\n|"+lastedit['user']+"\n|"+lastedit['timestamp']+"\n"
-def runCategory(cat,type):
+def runCategory(cat,type,table):
     alltable=""
     ulist = getMembers(cat)
     if len(ulist)==0:return ""
@@ -149,7 +149,7 @@ def runCategory(cat,type):
     specialappeallist = {}
     for page in ulist:
         user = page['title'].split("User talk:")[1]
-        if user in table:continue
+        for item in table.values():if user in item:continue
         blockinfo = findblock(user)
         appealtime = findunblocktime(page['title'],page['pageid'])
         lastedit = getLastEdit(page['title'])
@@ -164,10 +164,10 @@ tableheader = """
 {|class="wikitable sortable" width="100%"
 !Request time!!User!!Block info!!Last user edit!!Timestamp
 """
-table=runCategory("Requests for username changes when blocked‎","username")
-table.update(runCategory("Requests for unblock","normal"))
-table.update(runCategory("Requests for unblock-auto‎","auto"))
-table.update(runCategory("Unblock on hold‎","hold"))
+table=runCategory("Requests for username changes when blocked‎","username",table)
+table.update(runCategory("Requests for unblock","normal",table))
+table.update(runCategory("Requests for unblock-auto‎","auto",table))
+table.update(runCategory("Unblock on hold‎","hold",table))
     #r"([0-2]|)[0-9]:[0-5][0-9], ([0-3]|)[0-9] .* 20[0-9][0-9] \(UTC\)"
 print table
 quit()
