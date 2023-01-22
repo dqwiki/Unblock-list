@@ -156,19 +156,21 @@ def runCategory(cat,type,table):
         #print(appealtime.__class__)
         specialappeallist[str(appealtime)] = formatrow(blockinfo,appealtime,lastedit,type)
     specialappealarray = sorted(specialappeallist.items(), key=lambda appeals: appeals[0])
-    for item in specialappealarray:
-        alltable += item[1]
+    ### for item in specialappealarray:
+        ### alltable += item[1]
     ### Old: alltable += formatrow(blockinfo,appealtime,lastedit,type)
-    return alltable
-table = """
+    return specialappealarray
+tableheader = """
 {|class="wikitable sortable" width="100%"
 !Request time!!User!!Block info!!Last user edit!!Timestamp
 """
 table+=runCategory("Requests for username changes when blocked‎","username",table)
-table+=runCategory("Requests for unblock","normal",table)
-table+=runCategory("Requests for unblock-auto‎","auto",table)
-table+=runCategory("Unblock on hold‎","hold",table)
+table.update(runCategory("Requests for unblock","normal",table))
+table.update(runCategory("Requests for unblock-auto‎","auto",table))
+table.update(runCategory("Unblock on hold‎","hold",table))
     #r"([0-2]|)[0-9]:[0-5][0-9], ([0-3]|)[0-9] .* 20[0-9][0-9] \(UTC\)"
-table+="|}"
+print table
+quit()
+tablefooter="|}"
 page = masterwiki.pages["User:AmandaNP/unblock table"]
 page.save(table, "Manually requested run - Unblock table")
