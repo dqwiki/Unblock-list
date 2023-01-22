@@ -146,7 +146,7 @@ def runCategory(cat,type,table):
     ulist = getMembers(cat)
     if len(ulist)==0:return ""
     blocklist=[]
-    specialappeallist = []
+    specialappeallist = {}
     for page in ulist:
         user = page['title'].split("User talk:")[1]
         if user in table:continue
@@ -157,8 +157,10 @@ def runCategory(cat,type,table):
         specialappeallist[str(appealtime)] = formatrow(blockinfo,appealtime,lastedit,type)
     specialappealarray = sorted(specialappeallist.items(), key=lambda appeals: appeal[0])
     for item in specialappealarray:
-        alltable += item
+        alltable += item[1]
     ### Old: alltable += formatrow(blockinfo,appealtime,lastedit,type)
+    print alltable
+    quit()
     return alltable
 table = """
 {|class="wikitable sortable" width="100%"
