@@ -126,7 +126,7 @@ def findunblocktime(pagename,id):
         time = revision['timestamp']
         try:content = revision['slots']['main']['*']
         except:return "Unknown"
-        unblocktemplates = ["{{unblock|","{{unblockonhold|","{{unblock-auto|","{{unblock-bot|","{{unblock-spamun|","{{unblock-un|","{{unblock-unonhold|"]
+        unblocktemplates = ["{{unblock|","{{unblockonhold|","{{unblock-auto|","{{unblock-bot|","{{unblock-spamun|","{{unblock-un|","{{unblock-unonhold|","{{unblockrequest|"]
         for item in unblocktemplates:
             if item in content.lower().strip():
                 found=True
@@ -146,13 +146,18 @@ def runCategory(cat,type,table):
     ulist = getMembers(cat)
     if len(ulist)==0:return ""
     blocklist=[]
+    specialappeallist = []
     for page in ulist:
         user = page['title'].split("User talk:")[1]
         if user in table:continue
         blockinfo = findblock(user)
         appealtime = findunblocktime(page['title'],page['pageid'])
         lastedit = getLastEdit(page['title'])
-        alltable += formatrow(blockinfo,appealtime,lastedit,type)
+        specialappeallist[appealtime] = formatrow(blockinfo,appealtime,lastedit,type)
+    specialappealarray = sorted(specialappeallist.items(), key=lambda appeals: appeal[0])
+    for item in specialappealarray:
+        alltable += item
+    ### Old: alltable += formatrow(blockinfo,appealtime,lastedit,type)
     return alltable
 table = """
 {|class="wikitable sortable" width="100%"
