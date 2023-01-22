@@ -159,8 +159,6 @@ def runCategory(cat,type,table):
     for item in specialappealarray:
         alltable += item[1]
     ### Old: alltable += formatrow(blockinfo,appealtime,lastedit,type)
-    print alltable
-    quit()
     return alltable
 table = """
 {|class="wikitable sortable" width="100%"
