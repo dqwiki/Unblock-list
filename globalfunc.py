@@ -126,9 +126,9 @@ def findunblocktime(pagename,id):
         time = revision['timestamp']
         try:content = revision['slots']['main']['*']
         except:return "Unknown"
-        unblocktemplates = ["{{unblock|","{{unblock on hold|","{{unblock-auto|","{{unblock-bot|","{{unblock-spamun|","{{unblock-un|","{{unblock-un on hold|"]
+        unblocktemplates = ["{{unblock|","{{unblockonhold|","{{unblock-auto|","{{unblock-bot|","{{unblock-spamun|","{{unblock-un|","{{unblock-unonhold|"]
         for item in unblocktemplates:
-            if item in content.lower():
+            if item in content.lower().strip():
                 found=True
                 break
         if found:continue
@@ -140,7 +140,7 @@ def formatrow(block,appealtime,lastedit,type):
     if type=="auto":style='|- style="background-color:#ADD8E6"\n'
     if type=="username":style='|- style="background-color:#FFEFDB"\n'
     if type=="hold":style='|- style="background-color:#CC99CC"\n'
-    return style+"|[[User talk:"+block['user']+"|"+block['user']+"]]\n|"+appealtime+"\n|Admin: "+block['blockadmin']+"<br>Date: "+block['blockdate']+"<br>Reason: "+block['blockreason']+"<br>Length: "+block['blocklength']+"\n|"+lastedit['user']+"\n|"+lastedit['timestamp']+"\n"
+    return style+"\n|"+appealtime+"|[[User talk:"+block['user']+"|"+block['user']+"]]\n"+"|Admin: "+block['blockadmin']+"<br>Date: "+block['blockdate']+"<br>Reason: "+block['blockreason']+"<br>Length: "+block['blocklength']+"\n|"+lastedit['user']+"\n|"+lastedit['timestamp']+"\n"
 def runCategory(cat,type,table):
     alltable=""
     ulist = getMembers(cat)
