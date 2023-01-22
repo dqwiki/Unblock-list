@@ -140,7 +140,7 @@ def formatrow(block,appealtime,lastedit,type):
     if type=="auto":style='|- style="background-color:#ADD8E6"\n'
     if type=="username":style='|- style="background-color:#FFEFDB"\n'
     if type=="hold":style='|- style="background-color:#CC99CC"\n'
-    return style+"|"+appealtime+"|[[User talk:"+block['user']+"|"+block['user']+"]]\n"+"|Admin: "+block['blockadmin']+"<br>Date: "+block['blockdate']+"<br>Reason: "+block['blockreason']+"<br>Length: "+block['blocklength']+"\n|"+lastedit['user']+"\n|"+lastedit['timestamp']+"\n"
+    return style+"|"+appealtime+"\n|[[User talk:"+block['user']+"|"+block['user']+"]]\n"+"|Admin: "+block['blockadmin']+"<br>Date: "+block['blockdate']+"<br>Reason: "+block['blockreason']+"<br>Length: "+block['blocklength']+"\n|"+lastedit['user']+"\n|"+lastedit['timestamp']+"\n"
 def runCategory(cat,type,table):
     alltable=""
     ulist = getMembers(cat)
