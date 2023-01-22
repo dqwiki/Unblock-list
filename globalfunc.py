@@ -164,7 +164,7 @@ tableheader = """
 {|class="wikitable sortable" width="100%"
 !Request time!!User!!Block info!!Last user edit!!Timestamp
 """
-table+=runCategory("Requests for username changes when blocked‎","username",table)
+table=runCategory("Requests for username changes when blocked‎","username",table)
 table.update(runCategory("Requests for unblock","normal",table))
 table.update(runCategory("Requests for unblock-auto‎","auto",table))
 table.update(runCategory("Unblock on hold‎","hold",table))
