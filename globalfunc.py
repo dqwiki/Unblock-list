@@ -155,7 +155,7 @@ def runCategory(cat,type,table):
         lastedit = getLastEdit(page['title'])
         #print(appealtime.__class__)
         specialappeallist[str(appealtime)] = formatrow(blockinfo,appealtime,lastedit,type)
-    specialappealarray = sorted(specialappeallist.items(), key=lambda appeals: appeal[0])
+    specialappealarray = sorted(specialappeallist.items(), key=lambda appeals: appeals[0])
     for item in specialappealarray:
         alltable += item[1]
     ### Old: alltable += formatrow(blockinfo,appealtime,lastedit,type)
