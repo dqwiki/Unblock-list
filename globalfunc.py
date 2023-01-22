@@ -153,7 +153,7 @@ def runCategory(cat,type,table):
         blockinfo = findblock(user)
         appealtime = findunblocktime(page['title'],page['pageid'])
         lastedit = getLastEdit(page['title'])
-        print(appealtime)
+        print(type(appealtime))
         specialappeallist[appealtime] = formatrow(blockinfo,appealtime,lastedit,type)
     specialappealarray = sorted(specialappeallist.items(), key=lambda appeals: appeal[0])
     for item in specialappealarray:
