@@ -130,7 +130,7 @@ def findunblocktime(pagename,id,limit=50,increase=False):
         time = revision['timestamp']
         try:content = revision['slots']['main']['*']
         except:return "Unknown"
-        unblocktemplates = ["{{unblock|","{{unblockonhold|","{{unblock-auto|","{{unblock-bot|","{{unblock-spamun|","{{unblock-un|","{{unblock-unonhold|","{{unblockrequest|"]
+        unblocktemplates = ["{{unblock|","{{unblockonhold|","{{unblock-auto|","{{unblock-bot|","{{unblock-spamun|","{{unblock-un|","{{unblock-unonhold|","{{unblockrequest|","{{unblock-spamun|"]
         for item in unblocktemplates:
             if item in content.lower().strip():
                 found=True
