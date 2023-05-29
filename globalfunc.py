@@ -108,19 +108,23 @@ def findblock(user):
             if len(raw["query"]["blocks"])>0:
                 info = raw["query"]["blocks"][0]
                 return {'user':user,'blockadmin':info["by"],'blockdate':info["timestamp"],'blockreason':"<nowiki>"+info["reason"]+"</nowiki>",'blocklength':info["expiry"]}
-def findunblocktime(pagename,id):
+def findunblocktime(pagename,id,limit=50,increase=False):
+    if increase:limit=limit+50
+    if limit == 500:return ""
     params = {'action': 'query',
         'format': 'json',
         'prop': 'revisions',
         'titles': pagename,
         'rvslots': '*',
         'rvprop':"timestamp|user|content",
-        'rvlimit':50
+        'rvlimit':limit
         }
     raw = callAPI(params)
     time=""
     revisions= raw['query']['pages'][str(id)]['revisions']
     for revision in revisions:
+        if revision['user'] != pagename.split(":")[1]:
+            continue
         found=False
         timebefore = time
         time = revision['timestamp']
@@ -131,9 +135,11 @@ def findunblocktime(pagename,id):
             if item in content.lower().strip():
                 found=True
                 break
-        if found:continue
+        if found:continue       
         return timebefore
         break
+    try:crazy=timebefore
+    except UnboundLocalError:timebefore = findunblocktime(pagename, id, limit, True)
     return timebefore
 def formatrow(block,appealtime,lastedit,type):
     if type=="normal":style="|-\n"
@@ -147,14 +153,17 @@ def runCategory(cat,type,table):
     if len(ulist)==0:return ""
     blocklist=[]
     specialappeallist = {}
+    i=0
     for page in ulist:
         user = page['title'].split("User talk:")[1]
         for item in table.values():
-            if user in item:continue
+            if user in item:
+                continue
+            #else:print("Keep: "+user)
+        i = i+1
         blockinfo = findblock(user)
         appealtime = findunblocktime(page['title'],page['pageid'])
         lastedit = getLastEdit(page['title'])
-        #print(appealtime.__class__)
         specialappeallist[str(appealtime)] = formatrow(blockinfo,appealtime,lastedit,type)
     ### for item in specialappealarray:
         ### alltable += item[1]
