@@ -159,15 +159,18 @@ def runCategory(cat,type,table):
         for item in table.values():
             if user in item:
                 continue
-            #else:print("Keep: "+user)
         i = i+1
         blockinfo = findblock(user)
         appealtime = findunblocktime(page['title'],page['pageid'])
         lastedit = getLastEdit(page['title'])
-        specialappeallist[str(appealtime)] = formatrow(blockinfo,appealtime,lastedit,type)
+        currentrow = formatrow(blockinfo,appealtime,lastedit,type)
+
+        if not appealtime:appealtime="Placeholder "+str(i)
+        specialappeallist[str(appealtime)] = currentrow
     ### for item in specialappealarray:
         ### alltable += item[1]
     ### Old: alltable += formatrow(blockinfo,appealtime,lastedit,type)
+    #print(specialappeallist[specialtime])
     return specialappeallist
 tableheader = """
 {|class="wikitable sortable" width="100%"
@@ -175,10 +178,16 @@ tableheader = """
 """
 tablefooter="|}"
 table = {}
+
 table=runCategory("Requests for username changes when blocked‎","username",table)
+time.sleep(2)
 table.update(runCategory("Requests for unblock","normal",table))
+time.sleep(2)
 table.update(runCategory("Requests for unblock-auto‎","auto",table))
+time.sleep(2)
 table.update(runCategory("Unblock on hold‎","hold",table))
+time.sleep(2)
+
 result = sorted(table.items(), key=lambda appeals: appeals[0])
     #r"([0-2]|)[0-9]:[0-5][0-9], ([0-3]|)[0-9] .* 20[0-9][0-9] \(UTC\)"
 wikitable=""
