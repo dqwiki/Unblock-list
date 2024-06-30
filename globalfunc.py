@@ -123,7 +123,10 @@ def findunblocktime(pagename,id,limit=50,increase=False):
     time=""
     revisions= raw['query']['pages'][str(id)]['revisions']
     for revision in revisions:
-        if revision['user'] != pagename.split(":")[1]:
+        try:
+            if revision['user'] != pagename.split(":")[1]:
+                continue
+        except:
             continue
         found=False
         timebefore = time
