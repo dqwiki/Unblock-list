@@ -151,25 +151,22 @@ def formatrow(block,appealtime,lastedit,type):
     if type=="hold":style='|- style="background-color:#CC99CC"\n'
     return style+"|"+appealtime+"\n|[[User talk:"+block['user']+"|"+block['user']+"]]\n"+"|Admin: "+block['blockadmin']+"<br>Date: "+block['blockdate']+"<br>Reason: "+block['blockreason']+"<br>Length: "+block['blocklength']+"\n|"+lastedit['user']+"\n|"+lastedit['timestamp']+"\n"
 def runCategory(cat,type,table):
-    alltable=""
     ulist = getMembers(cat)
-    if len(ulist)==0:return ""
-    blocklist=[]
+    if len(ulist)==0:return
     specialappeallist = {}
-    i=0
     for page in ulist:
         user = page['title'].split("User talk:")[1]
         for item in table.values():
             if user in item:
+                #print('User '+user+" is in "+ item)
                 continue
-        i = i+1
         blockinfo = findblock(user)
         appealtime = findunblocktime(page['title'],page['pageid'])
         lastedit = getLastEdit(page['title'])
         currentrow = formatrow(blockinfo,appealtime,lastedit,type)
 
-        if not appealtime:appealtime="Placeholder "+str(i)
-        specialappeallist[str(appealtime)] = currentrow
+        if not appealtime:appealtime="Placeholder "+str(user)
+        specialappeallist.update({str(appealtime): currentrow})
     ### for item in specialappealarray:
         ### alltable += item[1]
     ### Old: alltable += formatrow(blockinfo,appealtime,lastedit,type)
@@ -182,13 +179,13 @@ tableheader = """
 tablefooter="|}"
 table = {}
 
-table=runCategory("Requests for username changes when blocked‎","username",table)
+table.update(runCategory("Requests for username changes when blocked‎","username",table))
 time.sleep(2)
-table.update(runCategory("Requests for unblock","normal",table))
+table.update(runCategory("Requests for unblock","normal",table) or {})
 time.sleep(2)
-table.update(runCategory("Requests for unblock-auto‎","auto",table))
+table.update(runCategory("Requests for unblock-auto‎","auto",table) or {})
 time.sleep(2)
-table.update(runCategory("Unblock on hold‎","hold",table))
+table.update(runCategory("Unblock on hold‎","hold",table) or {})
 time.sleep(2)
 
 result = sorted(table.items(), key=lambda appeals: appeals[0])
@@ -197,5 +194,6 @@ wikitable=""
 for item in result:
     wikitable+=item[1]
 wikitable = tableheader + wikitable + tablefooter
+#print(wikitable)
 page = masterwiki.pages["User:AmandaNP/unblock table"]
-page.save(wikitable, "Update unblock table")
+#page.save(wikitable, "Update unblock table")
