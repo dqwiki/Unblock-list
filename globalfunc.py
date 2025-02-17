@@ -194,6 +194,5 @@ wikitable=""
 for item in result:
     wikitable+=item[1]
 wikitable = tableheader + wikitable + tablefooter
-#print(wikitable)
 page = masterwiki.pages["User:AmandaNP/unblock table"]
-#page.save(wikitable, "Update unblock table")
+page.save(wikitable, "Update unblock table")
