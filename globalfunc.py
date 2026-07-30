@@ -179,7 +179,7 @@ tableheader = """
 tablefooter="|}"
 table = {}
 
-table.update(runCategory("Requests for username changes when blocked‎","username",table))
+table.update(runCategory("Requests for username changes when blocked‎","username",table) or {})
 time.sleep(2)
 table.update(runCategory("Requests for unblock","normal",table) or {})
 time.sleep(2)
