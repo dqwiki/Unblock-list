@@ -160,6 +160,7 @@ def runCategory(cat,type,table):
             if user in item:
                 #print('User '+user+" is in "+ item)
                 continue
+        if "/" in user:user=user.split("/")[0]
         blockinfo = findblock(user)
         appealtime = findunblocktime(page['title'],page['pageid'])
         lastedit = getLastEdit(page['title'])
